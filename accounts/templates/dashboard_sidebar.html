@@ -1,0 +1,12 @@
+ <!-- SIDEBAR -->
+ <ul class="list-group">
+    <a class="list-group-item" href={% url 'dashboard' %}>Dashboard</a>
+    <a class="list-group-item" href={% url 'my_orders' %}>My orders</a>
+    <a class="list-group-item" href={% url 'edit_profile' %}>Edit profile</a>
+    <a class="list-group-item" href={% url 'change_password' %}>Change Password</a>
+  </ul>
+  <br />
+  <a  style="
+  background: #dc3545;
+" class="btn btn-light btn-block p-2" href={% url 'logout' %}><i class="fa fa-power-off"></i> <span class="text">Log out</span></a>
+  <!-- SIDEBAR .//END -->

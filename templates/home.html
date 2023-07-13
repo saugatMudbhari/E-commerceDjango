@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+<!--main content start-->
+{% block content %}
+
+	<!-- banner section  -->
+	<section id="banner">
+		<div id="carouselExampleCaptions" class="carousel slide banner" data-bs-ride="false">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+					aria-current="true" aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+					aria-label="Slide 2"></button>
+			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="{% static 'images/banners/banner.png' %}" class="d-block w-100 " alt="...">
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- banner section ends  -->
+
+
+	<!-- popular products section  -->
+	<section class="popular-products">
+		<div class="container">
+			<header class="header-title d-flex pt-5 pb-2">
+				<h3 class="section-title">Popular products</h3>
+			</header><!-- sect-heading -->
+
+
+			<div class="row">
+				{% for product in products %}
+				<div class="col-md-4 col-lg-3 pt-3">
+					<div class="card card-product-grid h-100">
+						<a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.images.url }}"> </a>
+						<figcaption class="info-wrap">
+							<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
+							<div class="price mt-1">Rs.{{ product.price }}</div> <!-- price-wrap.// -->
+							<a href="{{ product.get_url }}" class="btn btn-block btn-danger">view product</a>
+						</figcaption>
+					</div>
+				</div> 
+				{% endfor %}
+		</div>
+
+		</div>
+	</section>
+	<!-- popular products section  ends  -->
+
+
+<div class="container">
+	<div class="row align-items-center">
+		<div class="col-md-6">
+			<img class="w-100" src="{% static 'images/vec.png'%}" alt="">
+		</div>
+		<div class="col-md-6">
+		<p class="lead">
+			Shop with ease and convenience. Discover a world of endless possibilities as our e-commerce application brings you closer to the products you love. Find everything you need in one place and enjoy a seamless shopping experience from the comfort of your home. Embrace the future of online shopping with us.
+		</p>
+		</div>
+	</div>
+</div>
+
+	
+{% endblock content %}
+<!--main content end-->
+
+

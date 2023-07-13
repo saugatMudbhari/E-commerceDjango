@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <section class="cart section-content padding-y">
+    <div class="container px-5">
+      <!-- ============================ COMPONENT 1 ================================= -->
+      <div class="row">
+        <aside class="col-lg-9">
+          <b>please review all your details provided</b>
+          <div class="card">
+            <div class="card-header font-weight-bold">Billing Address</div>
+            <div class="card-body border-botttom">
+              <p class="card-text">{{order.full_name}}</p>
+              <p class="card-text">{{order.full_address}}</p>
+              <b>order Note:</b><p>{%if order.order_note%} {{order.order_note}} {%else%} Go back to add order note  {%endif%}</p>
+            </div>
+            <div class="card-header font-weight-bold">Payment Method</div>
+            <div class="card-body border-botttom">
+              <p class="card-text">Khalti</p>
+            </div>
+            <div class="card-header font-weight-bold">Review Products</div>
+            <div class="card-body border-botttom">
+              {% comment %} <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> {% endcomment %}
+              <table class="table table-borderless table-shopping-cart">
+                <thead class="text-muted">
+                  <tr class="small text-uppercase">
+                    <th scope="col">Product</th>
+                    <th scope="col" width="120">Quantity</th>
+                    <th scope="col" width="120">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for cart_item in cart_items %}
+                    <tr class="border-top">
+                      <td>
+                        <figure class="itemside align-items-center">
+                          <div class="aside">
+                            <img src="{{ cart_item.product.images.url }}" class="img-sm" />
+                          </div>
+                          <figcaption class="info">
+                            <a href="{{ cart_item.product.get_url }}" class="text-dark text-decoration-none">{{ cart_item.product.product_name }}</a>
+                          </figcaption>
+                        </figure>
+                      </td>
+                      <td>
+                        <!-- col.// -->
+                        <label for="">{{ cart_item.quantity }}</label>
+                      </td>
+                      <td>
+                        <div class="price-wrap">
+                          <var class="price d-block">Rs.{{ cart_item.sub_total }}</var>
+                          <small class="text-muted">{{ cart_item.product.price }}</small>
+                        </div> <!-- price-wrap .// -->
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </aside>
+        <aside class="col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <dl class="dlist-align">
+                <dt>Total price:</dt>
+                <dd class="text-right">Rs. {{ total }}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Tax:</dt>
+                <dd class="text-right">Rs {{ tax }}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Grand Total:</dt>
+                <dd class="text-right text-dark b"><strong>{{ grand_total }}</strong></dd>
+              </dl>
+              <hr />
+              <div class="text-center">
+                <!-- Place this where you need payment button -->
+                <button id="payment-button" class="btn btn-primary d-block">Pay with Khalti</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div> <!-- container .// -->
+  </section>
+  <script>
+    var amount = '{{ grand_total }}'
+    var orderID = '{{ order_number }}'
+    var status = 'completed'
+    var config = {
+      // replace the publicKey with yours
+      publicKey: 'test_public_key_26140e164f234b32915796559e1a057e',
+      productIdentity: '1234567890',
+      productName: 'Dragon',
+      productUrl: 'http://127.0.0.1:8000/',
+      paymentPreference: ['KHALTI', 'EBANKING', 'MOBILE_BANKING', 'CONNECT_IPS', 'SCT'],
+      eventHandler: {
+        onSuccess(payload) {
+          axios
+            .get("{% url 'payments' %}", {
+              params: {
+                token: payload.token,
+                amount: payload.amount,
+                orderID: orderID,
+                status: status
+              }
+            })
+            .then(function (resp) {
+              window.location.href = "{% url 'order_complete' %}"
+              console.log(resp.data)
+              console.log(resp.data.payment)
+            })
+          console.log(payload)
+        },
+        onError(error) {
+          console.log(error)
+        },
+        onClose() {
+          console.log('widget is closing')
+        }
+      }
+    }
+    
+    var checkout = new KhaltiCheckout(config)
+    var btn = document.getElementById('payment-button')
+    btn.onclick = function () {
+      // minimum transaction amount must be 10, i.e 1000 in paisa.
+      checkout.show({ amount: amount })
+    }
+  </script>
+  <!-- Paste this code anywhere in you body tag -->
+{% endblock %}

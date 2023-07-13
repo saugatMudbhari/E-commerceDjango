@@ -1,0 +1,58 @@
+{% load static %}
+<div class=" my-5  border-top">
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start " style="
+    background: #ffe9e9;
+">
+        <!-- Section: Links  -->
+        <section class="footer">
+            <div class="container text-center text-md-start mt-5">
+                <div class="row mt-3 align-items-center">
+                    
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto">
+                        <h6 class="text-uppercase fw-bold"><img class="w-100" src="{% static 'images/logo.png'%}" alt=""></h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p>
+                            This is my final year projecct where the users can buy the product listed in the store were the uesr can create profile and view their order histroy
+                        </p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
+                        <h6 class="text-uppercase fw-bold">Useful links</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <a  class="links" href="#">Home</a>
+                        <a  class="links" href="#">Shop</a>
+                        <a  class="links" href="#">Category</a>
+                    </div>
+                   
+                    <div class=" col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4 contact">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Contact</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p><i class="fas fa-home mr-3">:</i>Kathmandu, Nepal</p>
+                        <a href="mailto:smudbhari85@gmail.com"><p> <i class="fas fa-envelope mr-3">: </i>hamropasalsupport@gmail.com</p></a>
+                    </div>
+                   
+                </div>
+               
+            </div>
+        </section>
+       
+    </footer>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.thumb a').click(function(e){
+			e.preventDefault();
+			$('.mainImage img').attr('src', $(this).attr("href"));
+		})
+	})
+</script>
+
+</body>
+</html>
